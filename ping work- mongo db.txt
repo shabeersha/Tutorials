@@ -1,0 +1,326 @@
+MongoDB shell version v4.0.10
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("e7151738-84f0-4560-89a9-adfff831cee4") }
+MongoDB server version: 4.0.10
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        http://docs.mongodb.org/
+Questions? Try the support group
+        http://groups.google.com/group/mongodb-user
+Server has startup warnings:
+2019-07-07T23:51:13.616-0700 I CONTROL  [initandlisten]
+2019-07-07T23:51:13.616-0700 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2019-07-07T23:51:13.616-0700 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2019-07-07T23:51:13.617-0700 I CONTROL  [initandlisten]
+---
+Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+and anyone you share the URL with. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command: db.enableFreeMonitoring()
+To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use sampledb
+switched to db sampledb
+> db
+sampledb
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db.create Collection "Person"
+2019-07-08T12:42:30.743+0530 E QUERY    [js] SyntaxError: missing ; before statement @(shell):1:10
+> db.create Collection ("Person")
+2019-07-08T12:43:00.161+0530 E QUERY    [js] SyntaxError: missing ; before statement @(shell):1:10
+> db.createCollection("Person")
+{ "ok" : 1 }
+> show Collections
+2019-07-08T12:44:05.554+0530 E QUERY    [js] Error: don't know how to show [Collections] :
+shellHelper.show@src/mongo/shell/utils.js:1066:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show Collection
+2019-07-08T12:44:11.033+0530 E QUERY    [js] Error: don't know how to show [Collection] :
+shellHelper.show@src/mongo/shell/utils.js:1066:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show Collection
+2019-07-08T12:44:25.699+0530 E QUERY    [js] Error: don't know how to show [Collection] :
+shellHelper.show@src/mongo/shell/utils.js:1066:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show collection
+2019-07-08T12:44:46.124+0530 E QUERY    [js] Error: don't know how to show [collection] :
+shellHelper.show@src/mongo/shell/utils.js:1066:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show Collections
+2019-07-08T12:44:58.778+0530 E QUERY    [js] Error: don't know how to show [Collections] :
+shellHelper.show@src/mongo/shell/utils.js:1066:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show collections
+Person
+> db.Person.insert({"name":"shabeer"})
+WriteResult({ "nInserted" : 1 })
+> db.Person.find
+function (query, fields, limit, skip, batchSize, options) {
+    var cursor = new DBQuery(this._mongo,
+                             this._db,
+                             this,
+                             this._fullName,
+                             this._massageObject(query),
+                             fields,
+                             limit,
+                             skip,
+                             batchSize,
+                             options || this.getQueryOptions());
+
+    {
+        const session = this.getDB().getSession();
+
+        const readPreference = session._serverSession.client.getReadPreference(session);
+        if (readPreference !== null) {
+            cursor.readPref(readPreference.mode, readPreference.tags);
+        }
+
+        const readConcern = session._serverSession.client.getReadConcern(session);
+        if (readConcern !== null) {
+            cursor.readConcern(readConcern.level);
+        }
+    }
+
+    return cursor;
+}
+> db.Person.find()
+{ "_id" : ObjectId("5d22ee40d46f45e33945f582"), "name" : "shabeer" }
+> show dbs
+admin     0.000GB
+config    0.000GB
+local     0.000GB
+sampledb  0.000GB
+> db.Person.drop()
+true
+> db.createCollection("Person")
+{ "ok" : 1 }
+> db.Person.insert({"name":"Shabeer"})
+WriteResult({ "nInserted" : 1 })
+> db.Person.drop()
+true
+> db.createCollection("personaldocs")
+{ "ok" : 1 }
+> db.personaldocs.insert({"name":"Shabeerali","age":21,"phone":9645198568})
+WriteResult({ "nInserted" : 1 })
+> db.personaldocs.insert({"name":"Ashique","age":22,"place":"kolappuram","phone":9645198568})
+WriteResult({ "nInserted" : 1 })
+> db.personaldocs.find()
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 21, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+> db.personaldocs.insert({"name":"Abinand","age":21,"place":"Calicut","phone":9645198568})
+WriteResult({ "nInserted" : 1 })
+> db.personaldocs.insert({"name":"varun","age":21,"place":"Calicut","phone":9645198568})
+WriteResult({ "nInserted" : 1 })
+> db.personaldocs.find()
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 21, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.insert({"name":"subin","age":20,"place":"Calicut","phone":9645198568})
+WriteResult({ "nInserted" : 1 })
+> db.personaldocs.find()
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 21, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.find().pretty
+function () {
+    this._prettyShell = true;
+    return this;
+}
+> db.personaldocs.find().pretty()
+{
+        "_id" : ObjectId("5d22f0f5d46f45e33945f584"),
+        "name" : "Shabeerali",
+        "age" : 21,
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f13cd46f45e33945f585"),
+        "name" : "Ashique",
+        "age" : 22,
+        "place" : "kolappuram",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1bed46f45e33945f586"),
+        "name" : "Abinand",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1d3d46f45e33945f587"),
+        "name" : "varun",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1e8d46f45e33945f588"),
+        "name" : "subin",
+        "age" : 20,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+> db.personaldocs.find({"age":20}).pretty()
+{
+        "_id" : ObjectId("5d22f1e8d46f45e33945f588"),
+        "name" : "subin",
+        "age" : 20,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+> db.personaldocs.find($and[{"age":20},{"place":"calicut"}]).pretty()
+2019-07-08T13:24:48.714+0530 E QUERY    [js] ReferenceError: $and is not defined :
+@(shell):1:1
+> db.personaldocs.find(&and[{"age":20},{"place":"calicut"}]).pretty()
+2019-07-08T13:25:00.743+0530 E QUERY    [js] SyntaxError: expected expression, got '&' @(shell):1:21
+> db.personaldocs.find({$and[{"age":20},{"place":"calicut"}]}).pretty()
+2019-07-08T13:25:57.152+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:26
+> db.personaldocs.find({$and[{"age":20},{"place":"calicut"}]})
+2019-07-08T13:26:14.691+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:26
+> db.personaldocs.find({$and:[{"age":20},{"place":"calicut"}]})
+>
+> }
+2019-07-08T13:26:41.541+0530 E QUERY    [js] SyntaxError: expected expression, got '}' @(shell):1:0
+> db.personaldocs.find({$and:[{"age":20},{"place":"calicut"}]})}
+2019-07-08T13:26:47.572+0530 E QUERY    [js] SyntaxError: expected expression, got '}' @(shell):1:60
+> db.personaldocs.find({$and:[{"age":20},{"place":"calicut"}]})
+> ;
+> }
+2019-07-08T13:27:34.955+0530 E QUERY    [js] SyntaxError: expected expression, got '}' @(shell):1:0
+> db.personaldocs.find({$and:[{"age":20},{"place":"Calicut"}]})
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.find({$and:[{"age":20},{"place":"Calicut"}]}).pretty()
+{
+        "_id" : ObjectId("5d22f1e8d46f45e33945f588"),
+        "name" : "subin",
+        "age" : 20,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+> db.personaldocs.find("age":{$gt:20}).pretty()
+2019-07-08T13:31:58.662+0530 E QUERY    [js] SyntaxError: missing ) after argument list @(shell):1:26
+> db.personaldocs.find({"age":{$gt:20}}).pretty()
+{
+        "_id" : ObjectId("5d22f0f5d46f45e33945f584"),
+        "name" : "Shabeerali",
+        "age" : 21,
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f13cd46f45e33945f585"),
+        "name" : "Ashique",
+        "age" : 22,
+        "place" : "kolappuram",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1bed46f45e33945f586"),
+        "name" : "Abinand",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1d3d46f45e33945f587"),
+        "name" : "varun",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+> update({"name":"shabeerali"},{$set:{"place":"malappuram"})
+...
+... :
+... }
+2019-07-08T13:40:26.122+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:57
+> update({"name":"shabeerali"},{$set:{"age":20})
+... }
+2019-07-08T13:41:14.415+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:45
+> update({"name":"shabeerali"},{$set:{"age":20}})
+2019-07-08T13:41:24.115+0530 E QUERY    [js] ReferenceError: update is not defined :
+@(shell):1:1
+> update({"name":"Shabeerali"},{$set:{"age":20}})
+2019-07-08T13:42:20.176+0530 E QUERY    [js] ReferenceError: update is not defined :
+@(shell):1:1
+> db.personaldocs.update({"name":"Shabeerali"},{$set:{"age":20}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.personaldocs.find().pretty()
+{
+        "_id" : ObjectId("5d22f0f5d46f45e33945f584"),
+        "name" : "Shabeerali",
+        "age" : 20,
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f13cd46f45e33945f585"),
+        "name" : "Ashique",
+        "age" : 22,
+        "place" : "kolappuram",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1bed46f45e33945f586"),
+        "name" : "Abinand",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1d3d46f45e33945f587"),
+        "name" : "varun",
+        "age" : 21,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+{
+        "_id" : ObjectId("5d22f1e8d46f45e33945f588"),
+        "name" : "subin",
+        "age" : 20,
+        "place" : "Calicut",
+        "phone" : 9645198568
+}
+>
+> db.personaldocs.find().skip(2)
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.find().sort({"name":1})
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 20, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.find().sort({"name":-1})
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 20, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+> db.personaldocs.find().sort({"age":1})
+{ "_id" : ObjectId("5d22f0f5d46f45e33945f584"), "name" : "Shabeerali", "age" : 20, "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1e8d46f45e33945f588"), "name" : "subin", "age" : 20, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1bed46f45e33945f586"), "name" : "Abinand", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f1d3d46f45e33945f587"), "name" : "varun", "age" : 21, "place" : "Calicut", "phone" : 9645198568 }
+{ "_id" : ObjectId("5d22f13cd46f45e33945f585"), "name" : "Ashique", "age" : 22, "place" : "kolappuram", "phone" : 9645198568 }
+>

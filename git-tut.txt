@@ -1,0 +1,17 @@
+git init     				:to start git in a project
+
+git add --all/.				:to add to 
+
+git merge				:fast forward merge - linear merge method--- git merge 
+
+git commit   				:to commit
+
+git status				:to check the status
+
+git log    				:to check git log
+
+git remote add <name remote> <link>  	:to add remote server
+
+git remote  				:to show remote links
+
+git push <name of remote> <branch>	:to push branch into server
