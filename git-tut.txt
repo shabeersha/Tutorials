@@ -1,8 +1,22 @@
 git init     				:to start git in a project
 
-git add --all/.				:to add to 
+git clone <git repo. url>		:to clone git projects
 
-git merge				:fast forward merge - linear merge method--- git merge 
+git add --all / .			:to add to 
+
+git stash 				: to remove staged 
+
+git branch <new branch name> 		: creating  new branch
+
+git checkout <branch name>		:switching  branch
+
+git checkout <commit id>		: to checkout to commit.
+				
+git branch				: to show branch
+
+
+
+git merge <method>				:fast forward merge - linear merge method--- git merge 
 
 git commit   				:to commit
 
